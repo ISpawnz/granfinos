@@ -1,4 +1,4 @@
-import { Star, Quote } from 'lucide-react';
+import { Flame, Quote, Star } from 'lucide-react';
 import { reviews } from '@/data/menu';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
@@ -11,48 +11,64 @@ export default function Reviews() {
       id="avaliacoes"
       className="relative overflow-hidden bg-gf-black py-24 lg:py-32"
     >
-      <div className="absolute left-1/2 top-0 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-gf-orange/5 blur-[120px]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-gf-orange/[0.05] blur-[130px]" />
 
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="reveal text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-gf-orange/30 bg-gf-orange/10 px-4 py-2 text-sm font-medium text-gf-orange-light">
-            AVALIAÇÕES
+        <div className="flex flex-col items-start justify-between gap-6 border-b border-white/10 pb-8 sm:flex-row sm:items-end">
+          <div>
+            <div className="reveal section-pill mb-4">
+              <Flame size={14} className="text-gf-orange" />
+              <span>Avaliações Reais</span>
+            </div>
+            <h2 className="reveal reveal-delay-1 font-display text-4xl uppercase leading-[0.98] text-white sm:text-5xl lg:text-6xl">
+              QUEM PROVA, <span className="text-gradient-orange">RECOMENDA.</span>
+            </h2>
           </div>
-          <h2 className="font-display text-4xl text-white sm:text-5xl lg:text-6xl">
-            O QUE DIZEM NOSSOS <span className="text-gradient-orange">CLIENTES</span>
-          </h2>
-          <div className="mt-4 flex items-center justify-center gap-1">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} size={22} className="fill-gf-orange text-gf-orange" />
-            ))}
-            <span className="ml-2 font-display text-xl text-white">4.9</span>
-            <span className="text-sm text-gray-500">/ 5.0</span>
+
+          <div className="reveal reveal-delay-2 flex items-center gap-3 rounded-2xl border border-white/10 bg-gf-black-light px-5 py-3">
+            <div className="flex items-center gap-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={18} className="fill-gf-orange text-gf-orange" />
+              ))}
+            </div>
+            <div className="border-l border-white/10 pl-3">
+              <span className="font-display text-xl text-white">4.9</span>
+              <span className="ml-1 text-xs text-gray-400">/ 5.0 média</span>
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
           {reviews.map((review, i) => (
             <div
-              key={i}
-              className={`reveal reveal-delay-${i + 1} card-hover relative rounded-3xl border border-white/5 bg-gf-black-light p-8`}
+              key={review.author}
+              className={`reveal reveal-delay-${i + 1} card-hover flex flex-col justify-between rounded-3xl border border-white/[0.08] bg-gf-black-light p-7`}
             >
-              <Quote size={40} className="mb-4 text-gf-orange/30" />
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-1">
+                    {[...Array(review.rating)].map((_, j) => (
+                      <Star key={j} size={15} className="fill-gf-orange text-gf-orange" />
+                    ))}
+                  </div>
+                  <Quote size={28} className="text-gf-orange/25" />
+                </div>
 
-              <div className="mb-4 flex gap-1">
-                {[...Array(review.rating)].map((_, j) => (
-                  <Star key={j} size={16} className="fill-gf-orange text-gf-orange" />
-                ))}
+                <p className="mt-5 text-base leading-relaxed text-gray-200">"{review.text}"</p>
               </div>
 
-              <p className="text-base leading-relaxed text-gray-300">"{review.text}"</p>
-
-              <div className="mt-6 flex items-center gap-3 border-t border-white/5 pt-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gf-orange/15 font-display text-sm text-gf-orange">
-                  {review.author.charAt(0)}
+              <div className="mt-6 border-t border-white/[0.07] pt-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gf-orange/15 font-display text-sm text-gf-orange">
+                    {review.author.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-white">{review.author}</div>
+                    <div className="text-xs text-gray-400">{review.role}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-sm font-semibold text-white">{review.author}</div>
-                  <div className="text-xs text-gray-500">Cliente verificado</div>
+                <div className="mt-3 rounded-xl bg-gf-black px-3 py-1.5 text-xs font-medium text-gf-orange-light">
+                  {review.order}
                 </div>
               </div>
             </div>

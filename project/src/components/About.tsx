@@ -1,26 +1,62 @@
-import { Leaf, Beef, Flame } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Beef, Flame, Leaf, ShieldCheck } from 'lucide-react';
+import { assetUrl } from '@/data/menu';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-const features = [
+const aboutSlides = [
   {
-    icon: Leaf,
-    title: 'Ingredientes Selecionados',
-    description: 'Cuidamos de cada detalhe, do pão ao molho. Só entra no nosso hambúrguer o melhor.',
+    url: assetUrl('galeria/WhatsApp_Image_2026-09-20_at_12.33.41.jpeg'),
+    caption: 'Duplo Blend & Barbecue da Casa',
+    alt: 'Hambúrguer artesanal duplo Granfinos com cheddar e barbecue',
   },
   {
+    url: assetUrl('galeria/WhatsApp_Image_2026-09-20_at_12.33.40.jpeg'),
+    caption: 'Gran Monster Angus 320g na Brasa',
+    alt: 'Gran Monster Angus com duplo cheddar e bacon',
+  },
+  {
+    url: assetUrl('pedidos/WhatsApp_Image_2026-09-20_at_12.33.48.jpeg'),
+    caption: 'Gran Egg com Ovo na Chapa & Bacon',
+    alt: 'Gran Egg Angus com ovo, bacon e queijo derretido',
+  },
+  {
+    url: assetUrl('galeria/WhatsApp_Image_2026-09-20_at_12.33.47.jpeg'),
+    caption: 'Ingredientes Frescos Selecionados',
+    alt: 'Gran Salada Angus com alface e tomate fresco',
+  },
+];
+
+const pillars = [
+  {
     icon: Beef,
-    title: 'Hambúrguer Artesanal',
-    description: 'Carne moída na hora, tempero da casa e preparo no fogo para selar todos os sucos.',
+    title: 'Carne Alta & Ponto Certo',
+    description:
+      'Blend Angus 160g chapeado no fogo alto pra criar aquela casquinha dourada por fora e manter a carne suculenta por dentro.',
+  },
+  {
+    icon: Leaf,
+    title: 'Pão Selado & Queijo Escorrendo',
+    description:
+      'Pão brioche fofinho dourado na chapa com manteiga, queijo derretendo de verdade e fatias generosas de bacon crocante.',
   },
   {
     icon: Flame,
-    title: 'Muito Sabor',
-    description: 'Cada mordida é uma explosão de sabor. A experiência Granfinos é inesquecível.',
+    title: 'Maionese Verde da Casa',
+    description:
+      'Nossa receita artesanal batida com alho assado e cheiro-verde fresco. É o molho que todo mundo pede pote extra.',
   },
 ];
 
 export default function About() {
   const ref = useScrollReveal<HTMLElement>();
+  const [activePhoto, setActivePhoto] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActivePhoto((prev) => (prev + 1) % aboutSlides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section
@@ -28,52 +64,100 @@ export default function About() {
       id="sobre"
       className="relative overflow-hidden bg-gf-black py-24 lg:py-32"
     >
-      <div className="absolute -left-40 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-gf-orange/5 blur-[120px]" />
+      <div className="pointer-events-none absolute -left-40 top-1/2 h-[480px] w-[480px] -translate-y-1/2 rounded-full bg-gf-orange/[0.05] blur-[130px]" />
 
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
-          {/* Image side */}
-          <div className="reveal relative">
-            <div className="relative overflow-hidden rounded-3xl">
-              <img
-                src="https://images.pexels.com/photos/11220677/pexels-photo-11220677.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
-                alt="Hambúrgueres sendo grelhados na brasa"
-                className="aspect-[4/3] w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gf-black/60 to-transparent" />
-            </div>
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* Left: Auto-Alternating Real Photography Composition */}
+          <div className="reveal lg:col-span-6">
+            <div className="grid grid-cols-12 gap-4">
+              {/* Main large auto-cycling photo */}
+              <div className="col-span-12 overflow-hidden rounded-3xl border border-white/10 bg-gf-black-card">
+                <div className="relative aspect-[16/11] w-full overflow-hidden bg-gf-black">
+                  {aboutSlides.map((slide, idx) => {
+                    const isActive = idx === activePhoto;
+                    return (
+                      <img
+                        key={slide.url}
+                        src={slide.url}
+                        alt={slide.alt}
+                        className={`absolute inset-0 h-full w-full object-cover object-center transition-all duration-700 ease-out ${
+                          isActive
+                            ? 'scale-100 opacity-100 z-10'
+                            : 'scale-105 opacity-0 z-0 pointer-events-none'
+                        }`}
+                      />
+                    );
+                  })}
+                  <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-gf-black/75 via-transparent to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4 z-30 flex items-center justify-between gap-2">
+                    <span className="rounded-full border border-white/15 bg-gf-black/85 px-4 py-1.5 text-xs font-semibold text-white backdrop-blur-md">
+                      {aboutSlides[activePhoto].caption}
+                    </span>
+                    <span className="flex items-center gap-1.5 rounded-full bg-gf-orange px-3.5 py-1.5 text-xs font-bold text-gf-black">
+                      <ShieldCheck size={14} />
+                      100% Artesanal
+                    </span>
+                  </div>
+                </div>
+              </div>
 
+              {/* Bottom two balanced frames */}
+              <div className="col-span-6 overflow-hidden rounded-2xl border border-white/10 bg-gf-black-card">
+                <div className="aspect-[4/3] w-full overflow-hidden">
+                  <img
+                    src={assetUrl('galeria/WhatsApp_Image_2026-09-20_at_12.33.46.jpeg')}
+                    alt="Gran Bacon Angus com queijo derretido"
+                    className="h-full w-full object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
+                  />
+                </div>
+              </div>
+
+              <div className="col-span-6 overflow-hidden rounded-2xl border border-white/10 bg-gf-black-card">
+                <div className="aspect-[4/3] w-full overflow-hidden">
+                  <img
+                    src={assetUrl('galeria/WhatsApp_Image_2026-09-20_at_12.33.44.jpeg')}
+                    alt="Porção de batata frita crocante Granfinos"
+                    className="h-full w-full object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Text side */}
-          <div>
-            <div className="reveal mb-4 inline-flex items-center gap-2 rounded-full border border-gf-orange/30 bg-gf-orange/10 px-4 py-2 text-sm font-medium text-gf-orange-light">
-              SOBRE A GRANFINOS
+          {/* Right: Editorial Story & Craft Pillars */}
+          <div className="lg:col-span-6">
+            <div className="reveal section-pill mb-4">
+              <Flame size={14} className="text-gf-orange" />
+              <span>Sobre a Granfinos</span>
             </div>
 
-            <h2 className="reveal font-display text-4xl leading-tight text-white sm:text-5xl lg:text-6xl">
-              MAIS QUE UM <span className="text-gradient-orange">HAMBÚRGUER.</span>
+            <h2 className="reveal reveal-delay-1 font-display text-4xl uppercase leading-[0.98] text-white sm:text-5xl lg:text-6xl">
+              MAIS QUE UM HAMBÚRGUER.
               <br />
-              UMA EXPERIÊNCIA.
+              <span className="text-gradient-orange">TRADIÇÃO NA CHAPA.</span>
             </h2>
 
-            <p className="reveal mt-6 text-base leading-relaxed text-gray-400 lg:text-lg">
-              A Granfinos nasceu para transformar o simples ato de comer um hambúrguer em uma
-              experiência inesquecível. Trabalhamos com ingredientes selecionados, preparo cuidadoso
-              e muito sabor para entregar o melhor em cada pedido.
+            <p className="reveal reveal-delay-2 mt-6 text-base leading-relaxed text-gray-300 lg:text-lg">
+              A Granfinos começou no Varjão com uma chapa quente e uma ideia bem clara: fazer
+              hambúrguer como a gente gosta de comer. Carne moída no dia, queijo derretido escorrendo,
+              bacon fatiado na hora e nossa maionese verde artesanal. Sem firula, só comida boa
+              entregue quentinha na sua porta.
             </p>
 
-            <div className="mt-10 grid gap-5 sm:grid-cols-3">
-              {features.map((feature, i) => (
+            <div className="mt-8 space-y-4">
+              {pillars.map((item, i) => (
                 <div
-                  key={feature.title}
-                  className={`reveal reveal-delay-${i + 1} group rounded-2xl border border-white/5 bg-gf-black-light p-6 transition-all hover:border-gf-orange/30 hover:bg-gf-black-lighter`}
+                  key={item.title}
+                  className={`reveal reveal-delay-${i + 2} card-hover flex items-start gap-4 rounded-2xl border border-white/[0.08] bg-gf-black-light p-5`}
                 >
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gf-orange/15 text-gf-orange transition-transform group-hover:scale-110">
-                    <feature.icon size={24} />
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gf-orange/15 text-gf-orange">
+                    <item.icon size={22} />
                   </div>
-                  <h3 className="font-display text-lg text-white">{feature.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-400">{feature.description}</p>
+                  <div>
+                    <h3 className="font-display text-lg tracking-wide text-white">{item.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-gray-400">{item.description}</p>
+                  </div>
                 </div>
               ))}
             </div>

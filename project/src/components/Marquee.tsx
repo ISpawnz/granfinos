@@ -1,26 +1,26 @@
+import { Flame } from 'lucide-react';
+
 const items = [
-  'HAMBÚRGUER ARTESANAL',
-  'INGREDIENTES SELECIONADOS',
-  'MUITO SABOR',
-  'PÃO BRIOCHE',
-  'CARNE PREMIUM',
-  'CHEDDAR DERRETIDO',
-  'BACON CROCANTE',
-  'FEITO NO FOGO',
+  'BLEND ANGUS 160G',
+  'PÃO BRIOCHE SELADO NA MANTEIGA',
+  'SMASH BURGER NA CHAPA',
+  'MAIONESE CASEIRA EXCLUSIVA',
+  'CHEDDAR CREMOSO & BACON CROCANTE',
+  'ABERTO TODOS OS DIAS DAS 19H ÀS 23H',
 ];
 
 export default function Marquee() {
   const doubled = [...items, ...items];
 
   return (
-    <div className="relative overflow-hidden border-y border-gf-orange/20 bg-gf-orange py-4">
+    <div className="relative overflow-hidden border-y border-gf-orange/30 bg-gf-orange py-3.5">
       <div className="flex animate-marquee whitespace-nowrap">
         {doubled.map((item, i) => (
           <div key={i} className="flex items-center gap-6 px-6">
-            <span className="font-display text-lg uppercase tracking-wider text-gf-black">
+            <span className="font-display text-base uppercase tracking-wider text-gf-black sm:text-lg">
               {item}
             </span>
-            <span className="text-gf-black/40">✦</span>
+            <Flame size={16} className="shrink-0 fill-gf-black/30 text-gf-black/50" />
           </div>
         ))}
       </div>

@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Flame } from 'lucide-react';
 import { whatsappLink } from '@/data/menu';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
@@ -6,29 +6,44 @@ export default function CallToAction() {
   const ref = useScrollReveal<HTMLElement>();
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-gf-black py-24 lg:py-32">
-      <div className="absolute inset-0 bg-radial-orange opacity-80" />
-      <div className="absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gf-orange/15 blur-[120px]" />
+    <section ref={ref} className="relative overflow-hidden bg-gf-black py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <div className="reveal relative overflow-hidden rounded-[2.25rem] border border-gf-orange/25 bg-gradient-to-br from-gf-black-light via-gf-black-card to-gf-black p-8 text-center sm:p-14 lg:p-16">
+          <div className="pointer-events-none absolute inset-0 bg-radial-ember opacity-90" />
 
-      <div className="relative mx-auto max-w-4xl px-5 text-center lg:px-8">
-        <h2 className="reveal font-display text-5xl leading-tight text-white sm:text-6xl lg:text-7xl">
-          BATEU AQUELA <span className="text-gradient-orange">FOME?</span>
-        </h2>
+          <div className="relative mx-auto max-w-2xl">
+            <div className="section-pill mb-5">
+              <Flame size={14} className="text-gf-orange" />
+              <span>Chapa no Fogo</span>
+            </div>
 
-        <p className="reveal reveal-delay-1 mt-4 font-display text-2xl text-gray-300 sm:text-3xl">
-          Então você já sabe onde ir.
-        </p>
+            <h2 className="font-display text-4xl uppercase leading-[0.96] text-white sm:text-6xl lg:text-7xl">
+              BATEU AQUELA <span className="text-gradient-orange">FOME?</span>
+            </h2>
 
-        <div className="reveal reveal-delay-2 mt-10">
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 rounded-full bg-gf-orange px-10 py-5 text-lg font-bold text-gf-black transition-all hover:bg-gf-orange-light hover:shadow-2xl hover:shadow-gf-orange/40 animate-pulse-glow"
-          >
-            PEDIR AGORA
-            <ArrowRight size={24} className="transition-transform group-hover:translate-x-1.5" />
-          </a>
+            <p className="mt-4 text-base text-gray-300 sm:text-lg">
+              A chapa já tá acesa. Manda seu pedido pelo WhatsApp que a gente começa a chapear o seu
+              burger agora mesmo.
+            </p>
+
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary group !px-9 !py-4 !text-base"
+              >
+                <span>PEDIR AGORA NO WHATSAPP</span>
+                <ArrowRight
+                  size={20}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </a>
+              <a href="#cardapio" className="btn-secondary !px-8 !py-4">
+                <span>VER CARDÁPIO</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

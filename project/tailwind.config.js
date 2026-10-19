@@ -13,24 +13,15 @@ export default {
           },
           black: {
             DEFAULT: '#0a0a0a',
-            light: '#141414',
-            lighter: '#1c1c1c',
+            light: '#131313',
+            lighter: '#1b1b1b',
             card: '#161616',
           },
         },
       },
       fontFamily: {
         display: ['Anton', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.8s ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
+        sans: ['Outfit', 'sans-serif'],
       },
     },
   },
